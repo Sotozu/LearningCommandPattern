@@ -4,8 +4,13 @@
 I am using the term receiver/game-actor because the command pattern more generally applies to something that is a "receiver" (which is anything that takes a command)
 and the game-actor part of the term is there because of its use in interactive objects in the game we wish to command as the player.
 
-I am using the term function/method because new programmers who come from one line of education may use either term and in my experience was the cause of simple missunderstanding when reading documentation.
-Function and method are the same thing.
+
+0. Invoker is mapped with specific commands to a specfic receiver/game-actor
+1. User presses button 
+2. Invoker determines which specific command to execute based on the button pressed
+3. Specific command calls the receiver/game-actor specific implementaion
+4. game-actor executes code changing an element of game-actor
+5. Game loop updates with changes to game-actor
 
 */
 
@@ -39,9 +44,8 @@ int main() {
 
 
 	/*
-	The Invoker_InputHandler functions/methods SetButtonX and SetButtonY are executed. 
-	They are passed a dynamically created FireCommand and JumpCommand respectively.
-	The FireCommand and the JumpCommand are both passed the reciver/game-actor that we want to execute these commands on.
+	The Invoker_InputHandler functions SetButtonX and SetButtonY are passed a dynamically created AttackCommand and JumpCommand respectively.
+	These paased in commands to the invoker are initialized with the targeted receiver/game-actor that we wish to execute the commands on.
 	*/
 	do {
 
@@ -74,8 +78,9 @@ int main() {
 
 
 		/*
-		Now we test the Command Pattern
+		The invoker is now set with commands to the target reciever/game-actor of our choice 
 		*/
+
 		std::cout << "------------------------------------------------------------" << std::endl;
 		std::cout << "Now controlling " << fighter_name << std::endl;
 		std::cout << "3 Actions Total" << std::endl << std::endl;
@@ -86,7 +91,14 @@ int main() {
 			std::cout << "ENTER ACTION " << counter+1 << ": ";
 			std::cin >> input;
 
+			
 			if (std::toupper(input) != 'Q') {
+				/*
+				The invoker receives user input (a button press).
+				At his point the invoker knows the receiver/game-actor that it will execute a command on.
+				The invoker knows which type of command to send BUT it doesn't know the hard coded implemenation of the command BECAUSE...
+				that is defined inside the receiver/game-acotr which the invoker is sending commands to.
+				*/
 				invoker->handleInput(std::toupper(input));
 			}
 			counter++;

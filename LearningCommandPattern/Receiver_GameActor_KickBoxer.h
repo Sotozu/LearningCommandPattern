@@ -3,13 +3,12 @@
 #include "GameObject_Fighter.h"
 
 /*
-The Receiver_GameActor class defined here is a represention of a generic object in a game. In reality it can be many things.
+The Receiver_GameActor class defined here is a represention of a generic object in a game that will receive commands. In reality it can be many things.
 Example: main character, vehicle and other game objects
 
-Each of the possible examples above would have their own class and respective unqiue commands. They would be activated by the Invoker through the client.
+In this example we have a kick-boxer fighter and their unique implementation of thier jump() and attack() functions. These functions will be executed with commands.
 
-Example: main character would have it's unique functions/methods that command it to speak to NPC's, eat, jump and etc.
-Example: vehicle would whave it's unique functions/methods to command it to accelerate, play the radio, turn the wheel and etc.
+User (presses button) -> Invoker (determines which command to send based on button pressed) -> SpecificCommand (calls the GameActors specific implementaion) -> GameActor(executes code)
 
 */
 

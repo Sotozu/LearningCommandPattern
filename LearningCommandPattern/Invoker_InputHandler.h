@@ -4,9 +4,15 @@
 #include "Command.h"
 
 /*
-The Invoker_Inputhandler is like a game controller.
-Here we created a class that is structured to take in commands and then send out that specific command to the object that we are controlling.
-Simply. It looks at what type of command the player sent and then relays that command to the targeted receiver/game-actor.
+We can treat the Invoker_Inputhandler like a game controller.
+
+Here we created a class that is structured to take in user input and then determine what command to execute.
+Like a game controller. If your press button Y then the controller needs to send out a command for that button press.
+
+We 
+
+
+Simply. It looks at what type of input the player sent and then calls an execute command mapped to the receiver/game-actor.
 */
 
 
