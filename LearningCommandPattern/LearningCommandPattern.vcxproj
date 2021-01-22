@@ -127,7 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
-    <ClInclude Include="FireCommand.h" />
+    <ClInclude Include="AttackCommand.h" />
     <ClInclude Include="GameObject_Fighter.h" />
     <ClInclude Include="Invoker_InputHandler.h" />
     <ClInclude Include="JumpCommand.h" />

@@ -13,7 +13,7 @@ Function and method are the same thing.
 #include <string>
 
 #include "Command.h"
-#include "FireCommand.h"
+#include "AttackCommand.h"
 #include "JumpCommand.h"
 #include "Invoker_InputHandler.h"
 
@@ -62,13 +62,13 @@ int main() {
 
 		if (std::toupper(fighter_option) == 'A') {
 			fighter_name = "Sumo Wrestler";
-			invoker->SetButtonX(new FireCommand(game_actor_sumowrestler));
+			invoker->SetButtonX(new AttackCommand(game_actor_sumowrestler));
 			invoker->SetButtonY(new JumpCommand(game_actor_sumowrestler));
 
 		}
 		else if (std::toupper(fighter_option) == 'B') {
 			fighter_name = "Kick Boxer";
-			invoker->SetButtonX(new FireCommand(game_actor_kickboxer));
+			invoker->SetButtonX(new AttackCommand(game_actor_kickboxer));
 			invoker->SetButtonY(new JumpCommand(game_actor_kickboxer));
 		}
 

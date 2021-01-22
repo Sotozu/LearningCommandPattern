@@ -12,7 +12,7 @@ For example if you were controlling a receiver/game-actor like an infantry soild
 infantry soilder receiver/game-actor would have their fire rate be faster than that of another receiver/game-actor like a sniper.
 */
 
-class FireCommand : public Command {
+class AttackCommand : public Command {
 
 private:
 
@@ -20,7 +20,7 @@ private:
 
 
 public:
-	FireCommand(GameObject_Fighter* Game_Actor_Commanded)  {
+	AttackCommand(GameObject_Fighter* Game_Actor_Commanded)  {
 		fighter = Game_Actor_Commanded;
 	}
 	void Execute() const override {
