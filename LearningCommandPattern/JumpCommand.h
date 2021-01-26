@@ -23,15 +23,11 @@ class JumpCommand : public Command {
 
 private:
 
-	GameObject_Fighter* fighter = nullptr;
-
 public:
 
-	JumpCommand(GameObject_Fighter* Game_Actor_Commanded) {
-		fighter = Game_Actor_Commanded;
-	}
+	JumpCommand() {}
 
-	void Execute() const override {
-		this->fighter->jump();
+	void Execute(GameObject_Fighter* Game_Actor_Commanded) const override {
+		Game_Actor_Commanded->jump();
 	}
 };

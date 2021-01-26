@@ -41,5 +41,8 @@
     <ClInclude Include="AttackCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TauntCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

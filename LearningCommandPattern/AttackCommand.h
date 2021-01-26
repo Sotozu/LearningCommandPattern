@@ -22,14 +22,10 @@ class AttackCommand : public Command {
 
 private:
 
-	GameObject_Fighter* fighter = nullptr;
-
-
 public:
-	AttackCommand(GameObject_Fighter* Game_Actor_Commanded)  {
-		fighter = Game_Actor_Commanded;
-	}
-	void Execute() const override {
-		this->fighter->attack();
+	AttackCommand() {}
+
+	void Execute(GameObject_Fighter* Game_Actor_Commanded) const override {
+		Game_Actor_Commanded->attack();
 	}
 };

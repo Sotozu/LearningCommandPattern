@@ -27,5 +27,8 @@ public:
 		//methods to actually have the sumo wrestler jump...
 		std::cout << "Sumo Wrestler: Smash Attack!\n";
 	}
-
+	void taunt() override {
+		//methods to actually have the sumo wrestler taunt...
+		std::cout << "Sumo Wrestler: You can't milk those!\n";
+	}
 };

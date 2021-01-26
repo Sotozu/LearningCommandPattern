@@ -22,11 +22,13 @@ private:
 
 	Command* ButtonX;
 	Command* ButtonY;
+	Command* ButtonZ;
 
 public:
 	~Invoker_InputHandler() {
 		delete ButtonX;
 		delete ButtonY;
+		delete ButtonZ;
 	}
 
 	void SetButtonX(Command* command) {
@@ -36,17 +38,25 @@ public:
 		this->ButtonY = command;
 	}
 
-	void handleInput(char input) {
+	void SetButtonZ(Command* command) {
+		this->ButtonZ = command;
+	}
+
+	Command* handleInput(char input) {
 
 		if (input == 'X') {
-			buttonXPressed();
+			return ButtonX;
 		}
 		else if (input == 'Y') {
-			buttonYPressed();
+			return ButtonY;
+		}
+		else if (input == 'Z') {
+			return ButtonZ;
 		}
 
 	}
-	void buttonXPressed() {
+
+	/*void buttonXPressed() {
 		if (this->ButtonX) {
 			this->ButtonX->Execute();
 		}
@@ -57,4 +67,10 @@ public:
 			ButtonY->Execute();
 		}
 	}
+
+	void buttonZPressed() {
+		if (this->ButtonZ) {
+			ButtonZ->Execute();
+		}
+	}*/
 };

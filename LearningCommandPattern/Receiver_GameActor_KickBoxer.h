@@ -26,4 +26,9 @@ public:
 		std::cout << "Kick Boxer: Quick Attack!\n";
 	}
 
+	void taunt() override {
+		//methods to actually have the kickboxer taunt...
+		std::cout << "Kick Boxer: SCREEEEEEEEEEEEEEEEE!\n";
+	}
+
 };

@@ -133,6 +133,7 @@
     <ClInclude Include="JumpCommand.h" />
     <ClInclude Include="Receiver_GameActor_KickBoxer.h" />
     <ClInclude Include="Receiver_GameActor_SumoWrestler.h" />
+    <ClInclude Include="TauntCommand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

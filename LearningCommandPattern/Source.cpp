@@ -20,8 +20,9 @@ and the game-actor part of the term is there because of its use in interactive o
 #include "Command.h"
 #include "AttackCommand.h"
 #include "JumpCommand.h"
+#include "TauntCommand.h"
 #include "Invoker_InputHandler.h"
-
+#include "GameObject_Fighter.h"
 #include "Receiver_GameActor_KickBoxer.h"
 #include "Receiver_GameActor_SumoWrestler.h"
  
@@ -33,15 +34,24 @@ int main() {
 	int counter = 0;
 	std::string fighter_name;
 
+
 	/*
 	The Invoker_InputHandler is something like a game controller (it takes in commands from the user and then sends them to a receiver/game-actor that we wish to command).
 	The Receiver_GameActor is something like a receiver/game-actor (ex. the main character in a game that we command).
 	*/
 
-	Invoker_InputHandler* invoker = new Invoker_InputHandler;
+
 	Receiver_GameActor_KickBoxer* game_actor_kickboxer = new Receiver_GameActor_KickBoxer;
+
 	Receiver_GameActor_SumoWrestler* game_actor_sumowrestler = new Receiver_GameActor_SumoWrestler;
 
+	GameObject_Fighter* fighter = nullptr;
+
+	Invoker_InputHandler* invoker = new Invoker_InputHandler;
+
+	invoker->SetButtonX(new AttackCommand());
+	invoker->SetButtonY(new JumpCommand());
+	invoker->SetButtonZ(new TauntCommand());
 
 	/*
 	The Invoker_InputHandler functions SetButtonX and SetButtonY are passed a dynamically created AttackCommand and JumpCommand respectively.
@@ -66,14 +76,15 @@ int main() {
 
 		if (std::toupper(fighter_option) == 'A') {
 			fighter_name = "Sumo Wrestler";
-			invoker->SetButtonX(new AttackCommand(game_actor_sumowrestler));
-			invoker->SetButtonY(new JumpCommand(game_actor_sumowrestler));
+			fighter = game_actor_sumowrestler;
+			
+
 
 		}
 		else if (std::toupper(fighter_option) == 'B') {
 			fighter_name = "Kick Boxer";
-			invoker->SetButtonX(new AttackCommand(game_actor_kickboxer));
-			invoker->SetButtonY(new JumpCommand(game_actor_kickboxer));
+
+			fighter = game_actor_kickboxer;
 		}
 
 
@@ -84,7 +95,7 @@ int main() {
 		std::cout << "------------------------------------------------------------" << std::endl;
 		std::cout << "Now controlling " << fighter_name << std::endl;
 		std::cout << "3 Actions Total" << std::endl << std::endl;
-		std::cout << "Please enter 'X', 'Y' or 'Q' to quit" << std::endl << std::endl;
+		std::cout << "Please enter 'X', 'Y', 'Z', or 'Q' to quit" << std::endl << std::endl;
 
 
 		do {
@@ -99,7 +110,13 @@ int main() {
 				The invoker knows which type of command to send BUT it doesn't know the hard coded implemenation of the command BECAUSE...
 				that is defined inside the receiver/game-acotr which the invoker is sending commands to.
 				*/
-				invoker->handleInput(std::toupper(input));
+				Command* command = nullptr;
+
+				command = invoker->handleInput(std::toupper(input));
+
+				if (command) {
+					command->Execute(fighter);
+				}
 			}
 			counter++;
 		} while (counter < 3 && std::toupper(input) != 'Q');

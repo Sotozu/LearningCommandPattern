@@ -8,5 +8,6 @@ public:
 
 	virtual void jump() = 0;
 	virtual void attack() = 0;
+	virtual void taunt() = 0;
 
 };
