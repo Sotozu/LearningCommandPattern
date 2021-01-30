@@ -6,10 +6,7 @@
 The Receiver_GameActor class defined here is a represention of a generic object in a game that will receive commands. In reality it can be many things.
 Example: main character, vehicle and other game objects
 
-In this example we have a kick-boxer fighter and their unique implementation of thier jump() and attack() functions. These functions will be executed with commands.
-
-User (presses button) -> Invoker (determines which command to send based on button pressed) -> SpecificCommand (calls the GameActors specific implementaion) -> GameActor(executes code)
-
+In this example we have a kick-boxer fighter and their unique implementation of thier move_up() and attack() functions.
 */
 
 class Receiver_GameActor_KickBoxer : public GameObject_Fighter {

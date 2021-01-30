@@ -1,19 +1,3 @@
-/*
-*READ ME*
-
-I am using the term receiver/game-actor because the command pattern more generally applies to something that is a "receiver" (which is anything that takes a command)
-and the game-actor part of the term is there because of its use in interactive objects in the game we wish to command as the player.
-
-
-0. Invoker is mapped with specific commands to a specfic receiver/game-actor
-1. User presses button 
-2. Invoker determines which specific command to execute based on the button pressed
-3. Specific command calls the receiver/game-actor specific implementaion
-4. game-actor executes code changing an element of game-actor
-5. Game loop updates with changes to game-actor
-
-*/
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -39,25 +23,14 @@ int main() {
 	//container to hold a list of commands that we can then use to UNDO actions at a later point in time
 	std::vector<Command*> CommandList;
 
-	/*
-	The Invoker_InputHandler is something like a game controller (it takes in commands from the user and then sends them to a receiver/game-actor that we wish to command).
-	The Receiver_GameActor is something like a receiver/game-actor (ex. the main character in a game that we command).
-	*/
-
-
+	//Game actors we can controll
 	Receiver_GameActor_KickBoxer* game_actor_kickboxer = new Receiver_GameActor_KickBoxer;
 
 	Receiver_GameActor_SumoWrestler* game_actor_sumowrestler = new Receiver_GameActor_SumoWrestler;
 
+	//Will be assigned kickboxer or sumo wrestler depending on the players choosing
 	GameObject_Fighter* fighter = nullptr;
 
-	
-
-
-	/*
-	The Invoker_InputHandler functions SetButtonX and SetButtonY are passed a dynamically created AttackCommand and JumpCommand respectively.
-	These paased in commands to the invoker are initialized with the targeted receiver/game-actor that we wish to execute the commands on.
-	*/
 	do {
 
 
@@ -78,6 +51,7 @@ int main() {
 		if (std::toupper(fighter_option) == 'A') {
 			fighter_name = "Sumo Wrestler";
 
+			//assign fighter
 			fighter = game_actor_sumowrestler;
 			
 
@@ -86,19 +60,17 @@ int main() {
 		else if (std::toupper(fighter_option) == 'B') {
 			fighter_name = "Kick Boxer";
 
+			//assign fighter
 			fighter = game_actor_kickboxer;
 		}
 
+		//the invoker is binded with the fighter so that it can access its data and execute commands on that specific fighter
 		Invoker_InputHandler* invoker = new Invoker_InputHandler(fighter);
-
-		/*
-		The invoker is now set with commands to the target reciever/game-actor of our choice 
-		*/
 
 		std::cout << "------------------------------------------------------------" << std::endl;
 		std::cout << "Now controlling " << fighter_name << std::endl;
 		std::cout << "10 Actions Total" << std::endl << std::endl;
-		std::cout << "'W', 'A', 'S', 'D' to move the fighter. Use 'F' to attack and 'T' to taunt." << std::endl;
+		std::cout << "'W', 'A', 'S', 'D' to move the fighter. Use 'F' to attack and 'T' to taunt" << std::endl;
 		std::cout << "------------------------------------------------------------" << std::endl << std::endl;
 
 
@@ -107,35 +79,27 @@ int main() {
 			std::cout << "ENTER ACTION " << counter+1 << ": ";
 			std::cin >> input;
 
-			
-			if (std::toupper(input) != 'Q') {
-				/*
-				The invoker receives user input (a button press).
-				At his point the invoker knows the receiver/game-actor that it will execute a command on.
-				The invoker knows which type of command to send BUT it doesn't know the hard coded implemenation of the command BECAUSE...
-				that is defined inside the receiver/game-acotr which the invoker is sending commands to.
-				*/
+			//The command returned by the invoker is binded to the fighter. So 'current_command' has actions that will explicitly call on the fighter to do something.
+			current_command = invoker->handleInput(std::toupper(input));
 
-				//returns the appropriate command
-				current_command = invoker->handleInput(std::toupper(input));
+			//Will only let movement commands be pushed into the vector
+			if (toupper(input) == 'W' || toupper(input)== 'A' || toupper(input) == 'S' || toupper(input) =='D') {
 
-				//will only let movement commands be pushed into the vector
-				if (toupper(input) == 'W' || toupper(input)== 'A' || toupper(input) == 'S' || toupper(input) =='D') {
-					CommandList.push_back(current_command);
-				}
-
-				if (current_command) {
-					current_command->Execute();
-					std::cout << std::endl;
-				}
+				//The commands are placed into this vector and can be used later to UNDO actions
+				CommandList.push_back(current_command);
 			}
+
+			if (current_command) {
+				//'current_command' is binded to the fighter. We execute that command and it will cause the fighter to perform some action
+				current_command->Execute();
+				std::cout << std::endl;
+			}
+			
+			//once this reaches 10 we break out of the loop
 			counter++;
-		} while (counter < 10 && std::toupper(input) != 'Q');
+		} while (counter < 10);
 
-		//resets the fighters position
-		fighter->reset_position();
-
-
+		
 		std::cout << "------------------------------------------------------------" << std::endl;
 		std::cout << "Would you like to UNDO some of your MOVEMENT commands?" << std::endl;
 		std::cout << "Enter 'Y' for yes and ANY OTHER KEY for no." << std::endl;
@@ -146,6 +110,8 @@ int main() {
 		std::cout << std::endl;
 
 		if (std::toupper(input) == 'Y') {
+
+			//'command_list_index' will be updated so that we can use it to access different commands in the CommandList vector
 			int command_list_index = CommandList.size();
 
 			std::cout << "------------------------------------------------------------" << std::endl;
@@ -170,6 +136,7 @@ int main() {
 					command_list_index++; 
 				}
 
+				//once either end of the command list has been reached
 				if (command_list_index <= 0) {
 					std::cout << "NO MORE UNDO COMMANDS" << std::endl;
 				}
@@ -181,24 +148,39 @@ int main() {
 
 		}
 
-		//clears the saved commands
+		//This is done so that we can continue to test different actions from scratch when the loop starts over
+		fighter->reset_position();
+
+
+		//clears the saved commands so tha we can continue to test different actions from scratch when the loop starts over
 		while (!CommandList.empty()) {
 			delete CommandList.back();
 			CommandList.pop_back();
 		}
 
-		std::cout << std::endl;
 		counter = 0;
+
+		std::cout << std::endl;
+		std::cout << "------------------------------------------------------------" << std::endl;
+		std::cout << "PLAY PROGRAM AGAIN?" << std::endl;
+		std::cout << "PRESS 'Q' to quit or any other key to continue." << std::endl;
+		std::cout << "------------------------------------------------------------" << std::endl << std::endl;
+
+
+
+		std::cout << "OPTION: ";
+		std::cin >> input;
+
+		std::cout << std::endl;
 
 	} while (std::toupper(input) != 'Q');
 
 
-	/*
-	Delete the dynamically created objects freeing memory
-	*/
+	
+	//Delete the dynamically created objects freeing memory
+
 	delete game_actor_kickboxer;
 	delete game_actor_sumowrestler;
-	delete current_command;
 
 	while (!CommandList.empty()) {
 		delete CommandList.back();

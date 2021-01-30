@@ -13,14 +13,9 @@
 
 /*
 We can treat the Invoker_Inputhandler like a game controller.
+On instantiation the Invoker is binded to the fighter we wish to controll.
+The invoker generates commands that are binded with the fighter binded and returns them to the program so that it can be executes OR saved for later;
 
-Here we created a class that is structured to take in user input and then determine what command to execute.
-Like a game controller. If your press button Y then the controller needs to send out a command for that button press.
-
-We 
-
-
-Simply. It looks at what type of input the player sent and then calls an execute command mapped to the receiver/game-actor.
 */
 
 
