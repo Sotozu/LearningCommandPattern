@@ -1,4 +1,3 @@
-#pragma once
 
 #pragma once
 #include <iostream>
@@ -16,19 +15,47 @@ Example: vehicle would whave it's unique functions/methods to command it to acce
 */
 
 class Receiver_GameActor_SumoWrestler : public GameObject_Fighter {
+private:
 
 public:
 
-	void jump() override {
-		//methods to actually have the sumo wrestler attack...
-		std::cout << "Sumo Wrestler: Short Jump!\n";
+	Receiver_GameActor_SumoWrestler() : GameObject_Fighter() {
+		x_ = 0;
+		y_ = 0;
 	}
+
+	void move_up(int y) override {
+		y_ = y;
+		std::cout << "Sumo Wrestler: Y-POS = " << y_ << std::endl;
+	}
+
+	void move_down(int y) override {
+		y_ = y;
+		std::cout << "Sumo Wrestler: Y-POS = " << y_ << std::endl;
+	}
+
+	void move_left(int x) override {
+		x_ = x;
+		std::cout << "Sumo Wrestler: X-POS = " << x_ << std::endl;
+	}
+
+	void move_right(int x) override {
+		x_ = x;
+		std::cout << "Sumo Wrestler: X-POS = " << x_ << std::endl;
+	}
+
 	void attack() override {
-		//methods to actually have the sumo wrestler jump...
 		std::cout << "Sumo Wrestler: Smash Attack!\n";
 	}
+
 	void taunt() override {
-		//methods to actually have the sumo wrestler taunt...
 		std::cout << "Sumo Wrestler: You can't milk those!\n";
 	}
+
+	void reset_position() override {
+		x_ = 0;
+		y_ = 0;
+	}
+
+	~Receiver_GameActor_SumoWrestler(){}
 };

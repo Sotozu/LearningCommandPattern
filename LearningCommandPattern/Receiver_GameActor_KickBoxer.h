@@ -13,22 +13,47 @@ User (presses button) -> Invoker (determines which command to send based on butt
 */
 
 class Receiver_GameActor_KickBoxer : public GameObject_Fighter {
+private:
 
 public:
 
-	void jump() override {
-
-		//methods to actually have the kickboxer jump...
-		std::cout << "Kick Boxer: High Jump!\n";
+	Receiver_GameActor_KickBoxer() : GameObject_Fighter() {
+		x_ = 0;
+		y_ = 0;
 	}
+
+	void move_up(int y) override {
+		y_ = y;
+		std::cout << "Kick Boxer: Y-POS = " << y_ << std::endl;
+	}
+
+	void move_down(int y) override {
+		y_ = y;
+		std::cout << "Kick Boxer: Y-POS = " << y_ << std::endl;
+	}
+
 	void attack() override {
-		//methods to actually have the kickboxer attack...
 		std::cout << "Kick Boxer: Quick Attack!\n";
 	}
 
 	void taunt() override {
-		//methods to actually have the kickboxer taunt...
 		std::cout << "Kick Boxer: SCREEEEEEEEEEEEEEEEE!\n";
 	}
 
+	void move_left(int x) override {
+		x_ = x;
+		std::cout << "Kick Boxer: X-POS = " << x_ << std::endl;
+	}
+
+	void move_right(int x) override {
+		x_ = x;
+		std::cout << "Kick Boxer: X-POS = " << x_ << std::endl;
+	}
+
+	void reset_position()  override {
+		x_ = 0;
+		y_ = 0;
+	}
+
+	~Receiver_GameActor_KickBoxer() {}
 };

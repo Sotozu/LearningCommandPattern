@@ -19,15 +19,22 @@ If a receiver/game-actor like an kick-boxer fighter were passed into this comman
 kick-boxer fighters would be different than that of another fighters implementation of the attack() function, like a sumo wrestler.
 */
 
-class JumpCommand : public Command {
-
+class MoveUpCommand : public Command {
 private:
-
+	GameObject_Fighter* fighter = nullptr;
+	int y_;
+	int yBefore_;
 public:
 
-	JumpCommand() {}
+	MoveUpCommand(GameObject_Fighter* Game_Actor_Commanded, int y)
+		: fighter(Game_Actor_Commanded), yBefore_(0), y_(y) {}
 
-	void Execute(GameObject_Fighter* Game_Actor_Commanded) const override {
-		Game_Actor_Commanded->jump();
+	void Execute() override {
+		yBefore_ = fighter->Get_Y_Pos();
+		fighter->move_up(y_);
+	}
+
+	void UnExecute() override{
+		fighter->move_up(yBefore_);
 	}
 };

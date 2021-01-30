@@ -5,12 +5,19 @@
 class TauntCommand : public Command {
 
 private:
-
+	GameObject_Fighter* fighter = nullptr;
 public:
 
-	TauntCommand() {}
-
-	void Execute(GameObject_Fighter* Game_Actor_Commanded) const override {
-		Game_Actor_Commanded->taunt();
+	TauntCommand(GameObject_Fighter* Game_Actor_Commanded) {
+		fighter = Game_Actor_Commanded;
 	}
+
+	void Execute() override {
+		fighter->taunt();
+	}
+
+	void UnExecute() override {
+
+	}
+
 };

@@ -130,7 +130,10 @@
     <ClInclude Include="AttackCommand.h" />
     <ClInclude Include="GameObject_Fighter.h" />
     <ClInclude Include="Invoker_InputHandler.h" />
-    <ClInclude Include="JumpCommand.h" />
+    <ClInclude Include="MoveDownCommand.h" />
+    <ClInclude Include="MoveUpCommand.h" />
+    <ClInclude Include="MoveLeftCommand.h" />
+    <ClInclude Include="MoveRightCommand.h" />
     <ClInclude Include="Receiver_GameActor_KickBoxer.h" />
     <ClInclude Include="Receiver_GameActor_SumoWrestler.h" />
     <ClInclude Include="TauntCommand.h" />
